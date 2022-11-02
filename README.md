@@ -1,6 +1,6 @@
 # LaTeX report template (AGH)
 
-[![GitHub Actions Status](https://github.com/kappa243/ltx-test/actions/workflows/build-latex.yml/badge.svg)](https://github.com/kappa243/ltx-test/actions)
+[![GitHub Actions Status](https://github.com/weed478/latex-report-template/actions/workflows/build-latex.yml/badge.svg)](https://github.com/weed478/latex-report-template/actions)
 
 Sample report template and automated compilation with Github Actions.
 
