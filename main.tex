@@ -1,0 +1,334 @@
+\documentclass[12pt,a4paper,openright,dvipsnames]{mwrep}
+
+%%% libraries
+
+\input{lib/conditions.tex} % where: conditions
+\input{lib/karnaugh.tex} % karnaugh maps
+
+
+%%% packages and basic settings
+
+\usepackage{lmodern} % fixes poor font quality (use only if NOT using XeLaTeX or LuaLaTeX)
+\usepackage[polish]{babel}
+\usepackage[T1]{polski}
+\usepackage[utf8]{inputenc}
+
+\usepackage[a4paper,
+            tmargin=2cm,
+            bmargin=2cm,
+            lmargin=2cm,
+            rmargin=2cm,
+            bindingoffset=0cm]{geometry}
+
+% ToC and hyper links
+\usepackage{tocloft} % controlling the typographic design of the Table of Contents
+\usepackage{hyperref} % handle cross-referencing commands to produce hypertext links in the document
+
+% maths
+\usepackage{amsmath} % improves the information structure and printed output
+\usepackage{amssymb} % provides an extended symbol collection
+\usepackage{siunitx} % units \SI \si
+% \usepackage{amsthm} % helps to define theorem-like structures
+
+% code syntax
+\usepackage{minted} % syntax highlighting using pygments (check docs for changing themes and styling)
+
+% graphics and styling
+\usepackage{graphicx} % graphics support
+\usepackage{subfig}
+\usepackage{float} % improves the interface for defining floating objects
+\usepackage{setspace} % sets space between lines
+
+% tables (check docs for every packages as each has a different task)
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{makecell}
+\usepackage{tabularx}
+
+% coloring utility
+\usepackage{xcolor}
+
+% advanced graphic stuff
+\usepackage{tikz}
+\usetikzlibrary{automata, positioning, arrows} % automata diagrams
+
+% black hyperlinks (change to blue for highlighting)
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+
+
+%%% variables
+
+\newcommand{\vtitle}{Title}
+\newcommand{\vauthors}{
+    Author One\\
+    Author Two
+}
+
+
+
+%%% code starts here
+
+
+% title page AGH
+\begin{document}
+\begin{titlepage}
+
+    \centering
+    \singlespacing
+
+    \includegraphics[scale=0.5]{common/agh.png}
+
+    \vspace*{0.4cm}
+
+    \fontsize{12}{16}{\textbf{\MakeUppercase{Akademia Górniczo-Hutnicza}}}\\
+    \fontsize{10}{12}{\textbf{\MakeUppercase{Im. Stanisława Staszica w Krakowie}}}
+
+    \vspace*{0.4cm}
+
+    \vspace{\stretch{0.3}}
+
+    {\LARGE\bfseries \vtitle\\}
+    \rule{3in}{0.4pt} \\
+    \large\vauthors
+
+
+    \vspace*{\stretch{2}}
+
+    \centerline{\rmfamily\fontsize{14}{16}\selectfont Kraków, \today}
+
+\end{titlepage}
+\newpage
+
+% ToC
+\tableofcontents
+\newpage
+
+
+%
+\chapter{Rozdział}
+
+%%
+\section{Sekcja 1}
+
+%%%
+\subsection{Syntax highlight}
+
+\phantomsection\hypertarget{python-code}{}
+\begin{minted}{python}
+def getFirstPrimeNumbers(n):
+    """Returns a list of the first n prime numbers"""
+    primes = []
+    i = 2
+    while len(primes) < n:
+        if isPrime(i):
+            primes.append(i)
+        i += 1
+    return primes
+
+
+
+def isPrime(n):
+    """Returns True if n is prime, False otherwise"""
+    for i in range(2, n):
+        if n % i == 0:
+            return False
+    return True
+
+if __name__ == "__main__":
+    print(getFirstPrimeNumbers(10))
+\end{minted}
+\newpage
+
+%%%
+\subsection{Images}
+
+\begin{figure}[H] % forces figure to this position (does not allow LaTeX to relocate for best fit)
+    \centering
+    \includegraphics[width=\textwidth]{example-image-a}
+    \caption{example A image}
+    \label{fig:example-a}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \subfloat[example subfig B]{%
+        \includegraphics[width=0.5\textwidth]{example-image-b}%
+    }
+    \subfloat[example subfig C]{%
+        \includegraphics[width=0.5\textwidth]{example-image-c}%
+    }
+    \caption{Subfigures B and C}
+\end{figure}
+
+
+%%%
+\subsection{Phantom hyperlink}
+
+Znalazłem interesujący \hyperlink{python-code}{kod} rozwiązujący nasz problem.
+
+
+%%%
+\subsection{Conditions}
+
+Short conditions:
+\begin{equation}
+    \rho S \Delta x
+    \frac{\partial^2 \Psi(x, t)}{\partial t^2}
+    =
+    S(\sigma (x + \Delta x) - \sigma(x))
+    \text{,}
+\end{equation}
+gdzie:
+\begin{conditions}
+    S & - & powierzchnia przekroju pręta, \\
+    \rho & - & gęstość materiału, \\
+    \sigma & - & naprężenie, \\
+    \Psi(x,t) & - & średnie przemieszczenie wycinka pręta.
+\end{conditions}
+
+\vspace*{0.6cm}
+
+Long conditions:
+\begin{equation}
+    \rho S \Delta x
+    \frac{\partial^2 \Psi(x, t)}{\partial t^2}
+    =
+    S(\sigma (x + \Delta x) - \sigma(x))
+    \text{,}
+\end{equation}
+gdzie:
+\begin{conditions*}
+    S & - & powierzchnia przekroju pręta, którego zamierzamy obliczyć
+            w dalszej części zadania, \\
+    \rho & - & gęstość materiału, \\
+    \sigma & - & naprężenie, \\
+    \Psi(x,t) & - & średnie przemieszczenie wycinka pręta.
+\end{conditions*}
+
+
+%%%
+\subsection{Automata diagram}
+
+\begin{figure}[H]
+    \tikzset{
+        ->, % makes the edges directed
+        >=stealth', % makes the arrow heads bold
+        node distance=3cm, % specifies the minimum distance between two nodes. Change if necessary.
+        every state/.style={thick, fill=gray!10}, % sets the properties for each ’state’ node
+        initial text=$ $, % sets the text that appears on the start arrow
+    }
+    \centering
+    \begin{tikzpicture}
+        \node[state, initial] at (-1.763, 2.427)     (q1)      {0000};
+        \node[state] at (1.763, 2.427)      (q2)      {0001};
+        \node[state] at (2.853, -0.927)     (q3)      {0011};
+        \node        at (0, -3)       (q4)  {$\cdots$}; 
+        \node[state] at (-2.853, -0.927)    (q5)      {1000};
+
+
+
+        \draw   (q1)    edge[bend left, above]  (q2)
+                (q2)    edge[bend left, above]  (q3)
+                (q3)    edge[bend left, above]  (q4)
+                (q4)    edge[bend left, above]  (q5)
+                (q5)    edge[bend left, above]  (q1); % A 0 lopp
+                % (q1)    edge[bend left, above]  node{1} (q2) % A 1 to B
+
+                % (q2)    edge[bend left, below]  node{0} (q1) % B 0 to A
+                % (q2)    edge[right]             node{1} (q3) % B 1 to C
+
+                % (q3)    edge[loop below]        node{1} (q3) % C 1 loop
+                % (q3)    edge[above]             node{0} (q4) % C 0 to D
+
+                % (q4)    edge[above]             node{1} (q5) % D 1 to E
+                % (q4)    edge[right]             node{0} (q1) % D 0 to A
+                
+                % (q5)    edge[above]             node{0} (q1); % E 0 to A
+
+
+
+
+    \end{tikzpicture}
+    \caption{Schemat automatu}
+\end{figure}
+
+
+\begin{figure}[H]
+    \tikzset{
+        ->, % makes the edges directed
+        >=stealth', % makes the arrow heads bold
+        node distance=3cm, % specifies the minimum distance between two nodes. Change if necessary.
+        every state/.style={thick, fill=gray!10}, % sets the properties for each ’state’ node
+        initial text=$ $, % sets the text that appears on the start arrow
+    }
+    \centering
+    \begin{tikzpicture}
+        \node[state, initial] at (0, 0) (q1) {A};
+        \node[state] at (4, 0) (q2) {B};
+        \node[state, accepting] at (0, -4) (q5) {E};
+        \node[state] at (4, -4) (q3) {C};
+        \node[state] at (2, -2) (q4) {D};
+
+        \draw   (q1)    edge[loop above]        node{0} (q1) % A 0 lopp
+                (q1)    edge[bend left, above]  node{1} (q2) % A 1 to B
+
+                (q2)    edge[bend left, below]  node{0} (q1) % B 0 to A
+                (q2)    edge[right]             node{1} (q3) % B 1 to C
+
+                (q3)    edge[loop below]        node{1} (q3) % C 1 loop
+                (q3)    edge[above]             node{0} (q4) % C 0 to D
+
+                (q4)    edge[below]             node{1} (q5) % D 1 to E
+                (q4)    edge[bend left, below]  node{0} (q1) % D 0 to A
+                
+                (q5)    edge[left]              node{0} (q1) % E 0 to A
+                (q5)    edge[below]             node{1} (q3); % E 1 to C
+
+
+
+
+    \end{tikzpicture}
+    \caption{Schemat automatu}
+\end{figure}
+
+
+%%%
+\subsection{Karnaugh map}
+
+\begin{figure}[H]
+    \centering
+    \begin{Karnaugh}{$Q_0 X$}{$Q_2 Q_1$}
+        \contingut{0,1,0,0,1,0,0,0,0,0,-,-,-,-,-,-}
+        \implicant{1}{1}{green}
+        \implicant{4}{12}{red}
+    \end{Karnaugh}
+    \caption{Tabela Karnaugh dla bitu 0}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{Karnaugh}{$Q_0 X$}{$Q_2 Q_1$}
+        \contingut{0,0,0,1,1,1,0,0,0,1,-,-,-,-,-,-}
+        \implicant{3}{3}{green}
+        \implicant{4}{13}{red}
+        \implicant{13}{11}{blue}
+    \end{Karnaugh}
+    \caption{Tabela Karnaugh dla bitu 1}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{Karnaugh}{$Q_0 X$}{$Q_2 Q_1$}
+        \contingut{0,0,0,0,0,0,0,1,0,0,-,-,-,-,-,-}
+        \implicant{7}{15}{green}
+    \end{Karnaugh}
+    \caption{Tabela Karnaugh dla bitu 2}
+\end{figure}
+
+\end{document}
